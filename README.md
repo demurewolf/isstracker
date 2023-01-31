@@ -4,7 +4,7 @@ This project would be a webpage that displays a world map and shows the location
 ## Requirements
 #### Base
 The requirements are as follows:
-- [ ] Have a world map
+- [ ] Have a world map (google maps, open street map, etc)
 - [ ] Show ISS location in real time relative to the world map
 - [ ] Display other stats about ISS location
 	- [ ] Latitude
@@ -17,4 +17,4 @@ The requirements are as follows:
 #### Bonus 
 - [ ] Host it on some VPS for others to see
 - [ ] ISS travel path until +/- 1 hour 
-- [ ] Day/night shift overlay on the world map
+
