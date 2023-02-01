@@ -4,10 +4,24 @@
 
 .App-header {
   background-color: #282c34;
+  min-height: 5vh;
   display: flex;
   align-items: left;
   justify-content: left;
   padding-left: calc(1vmin);
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.iss-information {
+  display: flex;
+  padding: calc(1vmin);
+}
+
+.iss-information > * {
+  margin: calc(1vmin);
+  border-style: solid;
+  border-color: #282c34;
+  border-radius: 4px;
+  border-width: medium;
 }
