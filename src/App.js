@@ -8,7 +8,7 @@ function TrackingMap({lat, lon}) {
         I am a map that will show you the ISS. I think it's at ({lat}, {lon})!
       </p>
     </div>
-  )
+  );
 }
 
 function StatTableRow({type, data}) {
@@ -17,14 +17,14 @@ function StatTableRow({type, data}) {
       <td>{type}</td>
       <td>{data}</td>
     </tr>
-  )
+  );
 }
 
 function Stats({currentStats}) {
-  const rows = []
+  const rows = [];
   // For each key-value in currentStats, add a StatTableRow to rows
   // Pass each key-value pair to a StatTableRow
-  Object.keys(currentStats).forEach(k => rows.push(<StatTableRow type={k} data={currentStats[k]}/>))
+  Object.keys(currentStats).forEach(k => rows.push(<StatTableRow type={k} data={currentStats[k]}/>));
   return (
     <div className='stats'>
       <p>
@@ -42,7 +42,7 @@ function Stats({currentStats}) {
         </tbody>
       </table>
     </div>
-  )
+  );
 }
 
 function Info() {
@@ -55,6 +55,10 @@ function Info() {
   )
 }
 
+
+// Set up onTick call here so ISS location refreshes every so often
+// The ISSApiInfo component will use the data here to refresh
+
 function ISSApiInfo() {
   return (
     <>
@@ -66,10 +70,10 @@ function ISSApiInfo() {
         }}/>
     </>
     
-  )
+  );
 }
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -82,5 +86,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
