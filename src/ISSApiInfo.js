@@ -34,7 +34,7 @@ export default function ISSApiInfo() {
     const intervalRef = useRef(null);
     const [issData, setISSData] = useState(null);
   
-    const ISS_API_URL = "https://api.wheretheiss.at/v1/satellites/25544";
+    const ISS_API_URL = "https://api.wheretheiss.at/v1/satellites/25544?units=miles";
   
     useEffect(() => {
       let ignore = false;
