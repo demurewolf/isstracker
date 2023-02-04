@@ -1,13 +1,19 @@
+import { useEffect, useRef, useState } from 'react';
+import { CircleMarker, MapContainer, TileLayer } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 import './App.css';
 
 
 function TrackingMap({lat, lon}) {
+  let position = [lat, lon];
   return (
-    <div className='tracking-map'>
-      <p>
-        I am a map that will show you the ISS. I think it's at ({lat}, {lon})!
-      </p>
-    </div>
+    <MapContainer center={position} zoom={2} scrollWhealZoom={false}>
+      <TileLayer 
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <CircleMarker center={position} radius={10}/>
+    </MapContainer>
   );
 }
 
@@ -22,9 +28,9 @@ function StatTableRow({type, data}) {
 
 function Stats({currentStats}) {
   const rows = [];
-  // For each key-value in currentStats, add a StatTableRow to rows
-  // Pass each key-value pair to a StatTableRow
-  Object.keys(currentStats).forEach(k => rows.push(<StatTableRow type={k} data={currentStats[k]}/>));
+  if (currentStats) {
+    Object.keys(currentStats).forEach(k => rows.push(<StatTableRow type={k} data={currentStats[k]}/>));
+  }
   return (
     <div className='stats'>
       <p>
@@ -56,18 +62,42 @@ function Info() {
 }
 
 
-// Set up onTick call here so ISS location refreshes every so often
-// The ISSApiInfo component will use the data here to refresh
-
 function ISSApiInfo() {
+  const intervalRef = useRef(null);
+  const [issData, setISSData] = useState(null);
+
+
+  const ISS_API_URL = "http://api.open-notify.org/iss-now";
+
+  useEffect(() => {
+    let ignore = false;
+    intervalRef.current = setInterval(() => {
+      fetch(ISS_API_URL)
+        .then((response) => response.json())
+        .then((data) => {
+          if (!ignore) {
+            setISSData(data);
+          }
+        });
+    }, 10000);
+    return () => {
+      ignore = true;
+      clearInterval(intervalRef.current);
+    }
+  }, []);
+
+  let lat = 0;
+  let lon = 0;
+  let issStats = null;
+  if (issData) {
+    lat = issData["iss_position"]["latitude"];
+    lon = issData["iss_position"]["longitude"];
+    issStats = issData["iss_position"];
+  }
   return (
     <>
-      <TrackingMap lat={0} lon={0}/>
-      <Stats currentStats={{
-        "speed": "0 m/s", 
-        "latitude": "0", 
-        "longitude": "0",
-        }}/>
+      <TrackingMap lat={lat} lon={lon}/>
+      <Stats currentStats={issStats}/>
     </>
     
   );
