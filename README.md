@@ -4,12 +4,12 @@ This project would be a webpage that displays a world map and shows the location
 ## Requirements
 #### Base
 The requirements are as follows:
-- [ ] Have a world map (google maps, open street map, etc)
-- [ ] Show ISS location in real time relative to the world map
+- [;] Have a world map (google maps, open street map, etc)
+- [;] Show ISS location in real time relative to the world map
 - [ ] Display other stats about ISS location
-	- [ ] Latitude
-	- [ ] Longitude
-	- [ ] Altitude
+	- [;] Latitude
+	- [;] Longitude
+	- [;] Altitude
 	- [ ] Current Speed
 	- [ ] Time of the time zone the ISS is currently in
 	- [ ] Convert between metric and imperial measurements
