@@ -1,4 +1,5 @@
 
+
 function StatTableRow({type, data}) {
     return (
       <tr>
@@ -11,7 +12,9 @@ function StatTableRow({type, data}) {
 export default function Stats({currentStats}) {
     const rows = [];
     if (currentStats) {
-        Object.keys(currentStats).forEach(k => rows.push(<StatTableRow type={k} data={currentStats[k]}/>));
+        Object.keys(currentStats).forEach(k => 
+            rows.push(<StatTableRow type={k} data={currentStats[k]}/>)
+        );
     }
     return (
       <div className='stats'>
