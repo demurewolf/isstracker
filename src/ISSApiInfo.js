@@ -7,7 +7,7 @@ import 'leaflet/dist/leaflet.css';
 function ISSMap({position}) {
     const map = useMap();
     console.log("Map center: " + map.getCenter());
-    // map.setView(position);
+    map.setView(position);
     return null;
   }
 
@@ -15,12 +15,15 @@ function ISSMap({position}) {
 function TrackingMap({lat, lon}) {
     let position = [lat, lon];
     return (
-      <MapContainer center={position} zoom={2} scrollWhealZoom={false}>
+      <MapContainer center={position} zoom={3} scrollWhealZoom={false}>
         <TileLayer 
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <CircleMarker center={position} radius={10}/>
+        <CircleMarker 
+            center={position} 
+            radius={10}
+        />
         <ISSMap position={[lat, lon]}/>
       </MapContainer>
     );
