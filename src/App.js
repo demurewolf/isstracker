@@ -66,8 +66,7 @@ function ISSApiInfo() {
   const intervalRef = useRef(null);
   const [issData, setISSData] = useState(null);
 
-
-  const ISS_API_URL = "http://api.open-notify.org/iss-now";
+  const ISS_API_URL = "https://api.wheretheiss.at/v1/satellites/25544";
 
   useEffect(() => {
     let ignore = false;
@@ -90,9 +89,9 @@ function ISSApiInfo() {
   let lon = 0;
   let issStats = null;
   if (issData) {
-    lat = issData["iss_position"]["latitude"];
-    lon = issData["iss_position"]["longitude"];
-    issStats = issData["iss_position"];
+    lat = issData["latitude"];
+    lon = issData["longitude"];
+    issStats = issData;
   }
   return (
     <>
