@@ -10,9 +10,9 @@ The requirements are as follows:
 	- [*] Latitude
 	- [*] Longitude
 	- [*] Altitude
-	- [ ] Current Speed
+	- [*] Current Speed
 	- [ ] Time of the time zone the ISS is currently in
-	- [ ] Convert between metric and imperial measurements
+	- [*] Convert between metric and imperial measurements
 
 #### Bonus 
 - [ ] Host it on some VPS for others to see
