@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 
 function ISSMap({position}) {
     const map = useMap();
-    console.log("Map center: " + map.getCenter());
+    //console.log("Map center: " + map.getCenter());
     map.setView(position);
     return null;
   }
@@ -32,9 +32,10 @@ function TrackingMap({lat, lon}) {
 
 export default function ISSApiInfo() {
     const intervalRef = useRef(null);
+    const [apiUnits, setApiUnits] = useState("miles");
     const [issData, setISSData] = useState(null);
   
-    const ISS_API_URL = "https://api.wheretheiss.at/v1/satellites/25544?units=miles";
+    const ISS_API_URL = "https://api.wheretheiss.at/v1/satellites/25544?units=" + apiUnits;
   
     useEffect(() => {
       let ignore = false;
@@ -51,7 +52,7 @@ export default function ISSApiInfo() {
         ignore = true;
         clearInterval(intervalRef.current);
       }
-    }, []);
+    }, [ISS_API_URL]);
   
     let lat = 0;
     let lon = 0;
@@ -61,10 +62,15 @@ export default function ISSApiInfo() {
       lon = issData["longitude"];
       issStats = issData;
     }
+
+    function handleUnitChange() {
+      apiUnits === "miles" ? setApiUnits("kilometers") : setApiUnits("miles");
+    }
+
     return (
       <>
         <TrackingMap lat={lat} lon={lon}/>
-        <Stats currentStats={issStats}/>
+        <Stats currentStats={issStats} onUnitChange={handleUnitChange} displayApiUnits={apiUnits}/>
       </>
       
     );
