@@ -30,3 +30,21 @@
   height: 400px;
   width: 50%;
 }
+
+.info {
+  width: 25%;
+}
+
+.stats {
+  width: 25%;
+}
+
+.stat-label {
+  text-transform: capitalize;
+}
+
+td {
+  text-align: left;
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}

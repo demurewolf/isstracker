@@ -2,7 +2,7 @@
 function StatTableRow({type, data}) {
     return (
       <tr>
-        <td>{type}</td>
+        <td className="stat-label">{type}</td>
         <td>{data}</td>
       </tr>
     );
@@ -41,12 +41,6 @@ export default function Stats({currentStats, onUnitChange, displayApiUnits}) {
       <div className='stats'>
         <table>
           <caption>Real Time ISS Statistics</caption>
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Value</th>
-            </tr>
-          </thead>
           <tbody>
             {rows}
           </tbody>
