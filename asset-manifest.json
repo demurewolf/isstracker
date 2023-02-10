@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/isstracker/static/css/main.8f6aeca8.css",
+    "main.js": "/isstracker/static/js/main.62350e6e.js",
+    "index.html": "/isstracker/index.html",
+    "main.8f6aeca8.css.map": "/isstracker/static/css/main.8f6aeca8.css.map",
+    "main.62350e6e.js.map": "/isstracker/static/js/main.62350e6e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8f6aeca8.css",
+    "static/js/main.62350e6e.js"
+  ]
+}
