@@ -13,22 +13,23 @@
   color: white;
 }
 
-.iss-information {
+.App-body {
   display: flex;
-  padding: calc(1vmin);
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  justify-content: left;
 }
 
-.iss-information > * {
-  margin: calc(1vmin);
+.App-body > * {
   border-style: solid;
   border-color: #282c34;
-  border-radius: 4px;
+  border-radius: 5px;
   border-width: medium;
 }
 
 .leaflet-container {
   height: 400px;
-  width: 50%;
+  width: 79%;
 }
 
 .info {
@@ -36,7 +37,7 @@
 }
 
 .stats {
-  width: 25%;
+  width: 20%;
 }
 
 .stat-label {

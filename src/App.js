@@ -8,7 +8,7 @@ export default function App() {
       <header className="App-header">
         ISS Tracking Map
       </header>
-      <div className='iss-information'>
+      <div className='App-body'>
         <ISSApiInfo />
         <Info />
       </div>
