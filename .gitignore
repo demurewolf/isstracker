@@ -26,3 +26,5 @@ yarn-error.log*
 
 /backend/venv
 current-tle.txt
+/backend/__pycache__
+
