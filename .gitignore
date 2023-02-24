@@ -28,3 +28,4 @@ yarn-error.log*
 current-tle.txt
 /backend/__pycache__
 /backend/iss/__pycache__
+/backend/dist
