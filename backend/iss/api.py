@@ -73,7 +73,7 @@ async def iss_now(units: str = "metric"):
     metric_units = True if units == "metric" else False
     
     return {
-        "latitutde": DEGREE_FACTOR * iss_tle.sublat,
+        "latitude": DEGREE_FACTOR * iss_tle.sublat,
         "longitude": DEGREE_FACTOR * iss_tle.sublong,
         "altidude": convert_elevation(iss_tle.elevation, metric_units),
         "velocity": angularv_to_linearv(iss_tle.n, iss_tle.elevation, metric_units),
