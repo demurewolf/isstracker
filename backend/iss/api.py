@@ -1,12 +1,22 @@
 import ephem
 from os.path import getmtime
 from subprocess import call
+from math import pi
 
 from fastapi import FastAPI, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 CURRENT_TLE_FILE = "current-tle.txt"
+KILOMETERS_TO_MILE_FACTOR = 0.6213711922 # 0.6213711922 miles to 1 km
+
+NOMINAL_EQUATORIAL_EARTH_RADIUS = 6_378_137 # meters
+ARITHMETIC_MEAN_EARTH_RADIUS = 6_371_008.8 # meters
+NOMINAL_POLAR_EARTH_RADIUS = 6_356_752 # meters
+
+BS_EARTH_RADIUS = NOMINAL_EQUATORIAL_EARTH_RADIUS + 10_000
+AVG_EARTH_RADIUS = NOMINAL_EQUATORIAL_EARTH_RADIUS
+SPEED_FACTOR = pi / 12
 app = FastAPI()
 
 origins = [
@@ -35,23 +45,30 @@ if not last_modified_time or getmtime(CURRENT_TLE_FILE) > last_modified_time:
         line2 = tle_file.readline().rstrip()
 
     iss_tle = ephem.readtle(name, line1, line2)
-    # help(iss)
+
+def angularv_to_linearv(rev_per_day, altitude, metric_units=False):
+    meters_per_hour = SPEED_FACTOR * (AVG_EARTH_RADIUS + altitude) * rev_per_day
+    kph_speed = meters_per_hour / 1000
+    return kph_speed if metric_units else metric_to_imperial(kph_speed)
+
+def metric_to_imperial(speed):
+    return speed * KILOMETERS_TO_MILE_FACTOR
 
 """
 iss_tle data:
 iss_tle.n is in revolutions/day
-Need to approximate a landspeed
+Need to approximate a linearspeed
 iss_tle.elevation is in meters by default
 Only need to convert if requested units is in miles
 """
 @app.get("/now")
-async def reIssData():
+async def iss_now():
     iss_tle.compute()
     return {
         "latitutde": str(iss_tle.sublat),
         "longitude": str(iss_tle.sublong),
         "altidude": iss_tle.elevation, # in meters
-        "velocity": iss_tle.n,
+        "velocity": angularv_to_linearv(iss_tle.n, iss_tle.elevation),
         "eclipsed": iss_tle.eclipsed
     }
 
