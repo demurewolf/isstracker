@@ -32,7 +32,7 @@ function TrackingMap({lat, lon}) {
 
 export default function ISSApiInfo() {
     const intervalRef = useRef(null);
-    const [apiUnits, setApiUnits] = useState("miles");
+    const [apiUnits, setApiUnits] = useState("imperial");
     const [issData, setISSData] = useState(null);
   
     const ISS_API_URL = "http://localhost:8000/now?units=" + apiUnits;
@@ -64,7 +64,7 @@ export default function ISSApiInfo() {
     }
 
     function handleUnitChange() {
-      apiUnits === "miles" ? setApiUnits("kilometers") : setApiUnits("miles");
+      apiUnits === "imperial" ? setApiUnits("metric") : setApiUnits("imperial");
     }
 
     return (
