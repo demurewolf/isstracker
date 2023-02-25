@@ -19,6 +19,7 @@ NOMINAL_POLAR_EARTH_RADIUS = 6_356_752 # meters
 TEST_EARTH_RADIUS = NOMINAL_EQUATORIAL_EARTH_RADIUS + 10_000 
 AVG_EARTH_RADIUS = NOMINAL_EQUATORIAL_EARTH_RADIUS
 SPEED_FACTOR = pi / 12
+DEGREE_FACTOR = 180 / pi
 app = FastAPI()
 
 origins = [
@@ -62,6 +63,8 @@ iss_tle.n is in revolutions/day
 Need to approximate a linearspeed
 iss_tle.elevation is in meters by default
 Only need to convert if requested units is in miles
+iss_tle.[sublat|sublong] are floats in radian units, but if converted to strings will be in the format degrees:minutes:seconds
+
 Param units: string with values as "metric" | "imperial" for unit conversion
 """
 @app.get("/now")
@@ -70,8 +73,8 @@ async def iss_now(units: str = "metric"):
     metric_units = True if units == "metric" else False
     
     return {
-        "latitutde": str(iss_tle.sublat),
-        "longitude": str(iss_tle.sublong),
+        "latitutde": DEGREE_FACTOR * iss_tle.sublat,
+        "longitude": DEGREE_FACTOR * iss_tle.sublong,
         "altidude": convert_elevation(iss_tle.elevation, metric_units),
         "velocity": angularv_to_linearv(iss_tle.n, iss_tle.elevation, metric_units),
         "eclipsed": iss_tle.eclipsed
