@@ -14,7 +14,9 @@ NOMINAL_EQUATORIAL_EARTH_RADIUS = 6_378_137 # meters
 ARITHMETIC_MEAN_EARTH_RADIUS = 6_371_008.8 # meters
 NOMINAL_POLAR_EARTH_RADIUS = 6_356_752 # meters
 
-BS_EARTH_RADIUS = NOMINAL_EQUATORIAL_EARTH_RADIUS + 10_000
+# This appears to fix the deviations between reported speeds
+# and my calculated speed
+TEST_EARTH_RADIUS = NOMINAL_EQUATORIAL_EARTH_RADIUS + 10_000 
 AVG_EARTH_RADIUS = NOMINAL_EQUATORIAL_EARTH_RADIUS
 SPEED_FACTOR = pi / 12
 app = FastAPI()
@@ -46,13 +48,13 @@ if not last_modified_time or getmtime(CURRENT_TLE_FILE) > last_modified_time:
 
     iss_tle = ephem.readtle(name, line1, line2)
 
-def angularv_to_linearv(rev_per_day, altitude, metric_units=False):
+def angularv_to_linearv(rev_per_day, altitude, metric_units=True):
     meters_per_hour = SPEED_FACTOR * (AVG_EARTH_RADIUS + altitude) * rev_per_day
     kph_speed = meters_per_hour / 1000
-    return kph_speed if metric_units else metric_to_imperial(kph_speed)
+    return kph_speed if metric_units else kph_speed * KILOMETERS_TO_MILE_FACTOR
 
-def metric_to_imperial(speed):
-    return speed * KILOMETERS_TO_MILE_FACTOR
+def convert_elevation(elevation, metric_units=True):
+    return elevation if metric_units else elevation * KILOMETERS_TO_MILE_FACTOR / 1000
 
 """
 iss_tle data:
@@ -60,15 +62,18 @@ iss_tle.n is in revolutions/day
 Need to approximate a linearspeed
 iss_tle.elevation is in meters by default
 Only need to convert if requested units is in miles
+Param units: string with values as "metric" | "imperial" for unit conversion
 """
 @app.get("/now")
-async def iss_now():
+async def iss_now(units: str = "metric"):
     iss_tle.compute()
+    metric_units = True if units == "metric" else False
+    
     return {
         "latitutde": str(iss_tle.sublat),
         "longitude": str(iss_tle.sublong),
-        "altidude": iss_tle.elevation, # in meters
-        "velocity": angularv_to_linearv(iss_tle.n, iss_tle.elevation),
+        "altidude": convert_elevation(iss_tle.elevation, metric_units),
+        "velocity": angularv_to_linearv(iss_tle.n, iss_tle.elevation, metric_units),
         "eclipsed": iss_tle.eclipsed
     }
 
