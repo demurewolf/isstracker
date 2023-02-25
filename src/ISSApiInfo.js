@@ -35,7 +35,8 @@ export default function ISSApiInfo() {
     const [apiUnits, setApiUnits] = useState("miles");
     const [issData, setISSData] = useState(null);
   
-    const ISS_API_URL = "https://api.wheretheiss.at/v1/satellites/25544?units=" + apiUnits;
+    // const ISS_API_URL = "https://api.wheretheiss.at/v1/satellites/25544?units=" + apiUnits;
+    const ISS_API_URL = "http://localhost:8000/now?units=" + apiUnits;
   
     useEffect(() => {
       let ignore = false;
