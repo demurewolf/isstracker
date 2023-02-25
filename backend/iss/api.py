@@ -75,9 +75,10 @@ async def iss_now(units: str = "metric"):
     return {
         "latitude": DEGREE_FACTOR * iss_tle.sublat,
         "longitude": DEGREE_FACTOR * iss_tle.sublong,
-        "altidude": convert_elevation(iss_tle.elevation, metric_units),
+        "altitude": convert_elevation(iss_tle.elevation, metric_units),
         "velocity": angularv_to_linearv(iss_tle.n, iss_tle.elevation, metric_units),
-        "eclipsed": iss_tle.eclipsed
+        "eclipsed": iss_tle.eclipsed,
+        "units": "kilometers" if metric_units else "miles"
     }
 
 class SPAStaticFiles(StaticFiles):
