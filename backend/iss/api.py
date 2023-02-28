@@ -69,7 +69,7 @@ async def iss_now(units: str = "metric"):
     * units: string with values as ["metric" | "imperial"] for unit conversion. Anything other than the two keys mentioned before defaults to "metric".
     """
     iss_tle.compute()
-    metric_units = True if units == "metric" else False
+    metric_units = False if units == "imperial" else True
     
     return {
         "latitude": DEGREE_FACTOR * iss_tle.sublat,
