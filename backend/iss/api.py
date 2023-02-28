@@ -57,18 +57,17 @@ def angularv_to_linearv(rev_per_day, altitude, metric_units=True):
 def convert_elevation(elevation, metric_units=True):
     return elevation if metric_units else elevation * KILOMETERS_TO_MILE_FACTOR / 1000
 
-"""
-iss_tle data:
-iss_tle.n is in revolutions/day
-Need to approximate a linearspeed
-iss_tle.elevation is in meters by default
-Only need to convert if requested units is in miles
-iss_tle.[sublat|sublong] are floats in radian units, but if converted to strings will be in the format degrees:minutes:seconds
-
-Param units: string with values as "metric" | "imperial" for unit conversion
-"""
 @app.get("/now")
 async def iss_now(units: str = "metric"):
+    """
+    Notes on iss_tle data:
+    * iss_tle.n is in revolutions/day
+    * iss_tle.elevation is in meters by default
+    * iss_tle.[sublat|sublong] are floats in radian units, but if converted to strings will be in the format degrees:minutes:seconds
+
+    Request Parameters:
+    * units: string with values as ["metric" | "imperial"] for unit conversion. Anything other than the two keys mentioned before defaults to "metric".
+    """
     iss_tle.compute()
     metric_units = True if units == "metric" else False
     
@@ -77,18 +76,6 @@ async def iss_now(units: str = "metric"):
         "longitude": DEGREE_FACTOR * iss_tle.sublong,
         "altitude": convert_elevation(iss_tle.elevation, metric_units),
         "velocity": angularv_to_linearv(iss_tle.n, iss_tle.elevation, metric_units),
-        "eclipsed": iss_tle.eclipsed,
+        # "eclipsed": iss_tle.eclipsed,
         "units": "kilometers" if metric_units else "miles"
     }
-
-class SPAStaticFiles(StaticFiles):
-    async def get_response(self, path: str, scope) -> Response:
-        try:
-            return await super().get_response(path, scope)
-        except HTTPException as ex:
-            if ex.status_code == 404:
-                return await super().get_response("index.html", scope)
-            else:
-                raise ex
-    
-app.mount("/", SPAStaticFiles(directory="dist", html=True), name="app")
