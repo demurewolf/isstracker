@@ -37,7 +37,7 @@ app.add_middleware(
 )
 
 last_modified_time = 0
-call(["bash", "./get-tle.sh"])
+call(["get-tle"])
 
 if not last_modified_time or getmtime(CURRENT_TLE_FILE) > last_modified_time:
     print("TLE has more recent time")
