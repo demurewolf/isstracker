@@ -20,7 +20,6 @@ export default function Info() {
       .then((response) => response.json())
       .then((data) => {
         if (!ignore) {
-          console.log(data)
           setAstrosNum(data["number"]);
           let newAstros = []
           data["people"].forEach((obj) => {
