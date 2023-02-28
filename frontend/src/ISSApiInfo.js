@@ -47,7 +47,7 @@ export default function ISSApiInfo() {
               setISSData(data);
             }
           });
-      }, 10000);
+      }, 5000);
       return () => {
         ignore = true;
         clearInterval(intervalRef.current);
