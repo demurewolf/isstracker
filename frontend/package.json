@@ -40,5 +40,6 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://iss.jrwedgwood.net"
+  "homepage": "https://iss.jrwedgwood.net",
+  "proxy": "http://localhost:8000"
 }

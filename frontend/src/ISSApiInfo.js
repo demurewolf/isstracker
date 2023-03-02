@@ -6,7 +6,6 @@ import 'leaflet/dist/leaflet.css';
 
 function ISSMap({position}) {
     const map = useMap();
-    //console.log("Map center: " + map.getCenter());
     map.setView(position);
     return null;
   }
@@ -34,8 +33,11 @@ export default function ISSApiInfo() {
     const intervalRef = useRef(null);
     const [apiUnits, setApiUnits] = useState("imperial");
     const [issData, setISSData] = useState(null);
-  
-    const ISS_API_URL = "http://localhost:8000/now?units=" + apiUnits;
+
+    // const OLD_API_URL = "https://api.wheretheiss.at/v1/satellites/25544?units" + apiUnits
+    // const REV_PROX_URL = "/api/now?units=" + apiUnits;
+    const ISS_API_URL = "/now?units=" + apiUnits;
+    // const ISS_API_URL = OLD_API_URL;
   
     useEffect(() => {
       let ignore = false;
