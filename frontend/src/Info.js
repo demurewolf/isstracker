@@ -11,7 +11,7 @@ function AstroRow({name}) {
 export default function Info() {
 
   const [astrosList, setAstrosList] = useState(null);
-  const [astrosNum, setAstrosNum] = useState(null);
+  const [astrosNum, setAstrosNum] = useState(0);
   const INFO_API_URL = "http://api.open-notify.org/astros.json";
 
   useEffect(() => {
@@ -21,11 +21,16 @@ export default function Info() {
       .then((data) => {
         if (!ignore) {
           setAstrosNum(data["number"]);
-          let newAstros = []
-          data["people"].forEach((obj) => {
-            newAstros.push(<AstroRow name={obj["name"]}/>);
+          let newAstros = [];
+          let issAstroCount = 0;
+          data["people"].forEach((astro) => {
+            if (astro["craft"] === "ISS") {
+              newAstros.push(<AstroRow name={astro["name"]}/>);
+              issAstroCount ++;
+            }
           });
           setAstrosList(newAstros);
+          setAstrosNum(issAstroCount);
         }
       });
     
@@ -33,11 +38,12 @@ export default function Info() {
       ignore = true;
     }
   }, [INFO_API_URL]);
-
+  let tableTitle = `Currently ${astrosNum} ISS Astronaut`;
+  if (astrosNum !== 1) tableTitle += "s";
   return (
     <div className='info'>
       <table>
-          <caption>Currently {astrosNum} ISS Astronauts</caption>
+          <caption>{tableTitle}</caption>
           <tbody>
             {astrosList}
           </tbody>
