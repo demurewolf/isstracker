@@ -3,7 +3,7 @@ from os.path import getmtime
 from subprocess import call
 from math import pi
 
-from fastapi import FastAPI, Response, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
@@ -23,6 +23,9 @@ DEGREE_FACTOR = 180 / pi
 app = FastAPI()
 
 origins = [
+    "http://localhost",
+    "localhost",
+    "http://iss.jrwedgwood.net",
     "http://localhost:3000",
     "localhost:3000"
 ]
@@ -76,6 +79,5 @@ async def iss_now(units: str = "metric"):
         "longitude": DEGREE_FACTOR * iss_tle.sublong,
         "altitude": convert_elevation(iss_tle.elevation, metric_units),
         "velocity": angularv_to_linearv(iss_tle.n, iss_tle.elevation, metric_units),
-        # "eclipsed": iss_tle.eclipsed,
         "units": "kilometers" if metric_units else "miles"
     }
