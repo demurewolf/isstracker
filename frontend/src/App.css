@@ -36,6 +36,19 @@
   width: 25%;
 }
 
+.info table {
+  width: 100%;
+}
+
+.info td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.info caption {
+  padding: auto;
+}
+
 .stats {
   width: 20%;
 }

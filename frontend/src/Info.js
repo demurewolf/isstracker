@@ -37,7 +37,7 @@ export default function Info() {
   return (
     <div className='info'>
       <table>
-          <caption>Current {astrosNum} ISS Astronauts</caption>
+          <caption>Currently {astrosNum} ISS Astronauts</caption>
           <tbody>
             {astrosList}
           </tbody>
