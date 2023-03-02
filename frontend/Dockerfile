@@ -12,6 +12,7 @@ RUN npm run build
 FROM nginx:alpine
 EXPOSE 80
 EXPOSE 443
+VOLUME "/etc/nginx/conf.d"
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=react-step /code/build ./
