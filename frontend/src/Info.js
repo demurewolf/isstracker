@@ -12,7 +12,7 @@ export default function Info() {
 
   const [astrosList, setAstrosList] = useState(null);
   const [astrosNum, setAstrosNum] = useState(null);
-  const INFO_API_URL = "https://api.open-notify.org/astros.json";
+  const INFO_API_URL = "http://api.open-notify.org/astros.json";
 
   useEffect(() => {
     let ignore = false;
