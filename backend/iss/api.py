@@ -1,7 +1,7 @@
 import ephem
 from os.path import getmtime
 from subprocess import call
-from math import pi
+from math import pi, degrees
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,7 +19,6 @@ NOMINAL_POLAR_EARTH_RADIUS = 6_356_752 # meters
 TEST_EARTH_RADIUS = NOMINAL_EQUATORIAL_EARTH_RADIUS + 10_000 
 AVG_EARTH_RADIUS = NOMINAL_EQUATORIAL_EARTH_RADIUS
 SPEED_FACTOR = pi / 12
-DEGREE_FACTOR = 180 / pi
 app = FastAPI()
 
 origins = [
@@ -75,9 +74,19 @@ async def iss_now(units: str = "metric"):
     metric_units = False if units == "imperial" else True
     
     return {
-        "latitude": DEGREE_FACTOR * iss_tle.sublat,
-        "longitude": DEGREE_FACTOR * iss_tle.sublong,
+        "latitude": degrees(iss_tle.sublat),
+        "longitude": degrees(iss_tle.sublong),
         "altitude": convert_elevation(iss_tle.elevation, metric_units),
         "velocity": angularv_to_linearv(iss_tle.n, iss_tle.elevation, metric_units),
         "units": "kilometers" if metric_units else "miles"
     }
+
+
+@app.get("/astros")
+async def astros_now(craft: str = None):
+    """
+    Returns the same avaiable json information from the Open-Notify API, but with https protection.
+
+    If parameter craft is provided, only returns astronauts on board that craft. By default it returns all astronauts currently in space.
+    """
+    return {}
