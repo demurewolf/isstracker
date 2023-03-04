@@ -2,11 +2,13 @@ version: "3"
 
 services:
   backend:
-    build: ./backend
+    image: index.docker.io/demurewolf/isstracker-backend
+    restart: always
     command: uvicorn iss.api:app --root-path /api --proxy-headers --host 0.0.0.0 --port 8000
     
   frontend:
-    build: ./frontend
+    image: index.docker.io/demurewolf/isstracker-frontend
+    restart: always
     ports:
       - "80:80"
     volumes:
