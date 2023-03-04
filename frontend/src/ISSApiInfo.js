@@ -35,8 +35,9 @@ export default function ISSApiInfo() {
     const [issData, setISSData] = useState(null);
 
     // const OLD_API_URL = "https://api.wheretheiss.at/v1/satellites/25544?units" + apiUnits
-    // const REV_PROX_URL = "/api/now?units=" + apiUnits;
-    const ISS_API_URL = "/now?units=" + apiUnits;
+    const REV_PROX_URL = "/api/now?units=" + apiUnits;
+    const ISS_API_URL = REV_PROX_URL;
+    // const ISS_API_URL = "/now?units=" + apiUnits;
     // const ISS_API_URL = OLD_API_URL;
   
     useEffect(() => {
