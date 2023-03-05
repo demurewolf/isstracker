@@ -14,6 +14,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "docker image build demurewolf/isstracker-frontend:latest ./",
+    "deploy": "docker push demurewolf/isstracker-frontend:latest",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
