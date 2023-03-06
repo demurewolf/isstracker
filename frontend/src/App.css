@@ -7,7 +7,7 @@
   min-height: 5vh;
   display: flex;
   align-items: left;
-  justify-content: left;
+  justify-content: center;
   padding-left: calc(1vmin);
   font-size: calc(10px + 2vmin);
   color: white;
