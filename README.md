@@ -15,6 +15,6 @@ The requirements are as follows:
 	- [x] Convert between metric and imperial measurements
 
 #### Bonus 
-- [ ] Host it on some VPS for others to see
+- [x] Host it on Linode for others to see
 - [ ] ISS travel path until +/- 1 hour 
 
