@@ -25,7 +25,9 @@ def angularv_to_linearv(rev_per_day, altitude, metric_units=True):
     return kph_speed if metric_units else kph_speed * KILOMETERS_TO_MILE_FACTOR
 
 def convert_elevation(elevation, metric_units=True):
-    return elevation if metric_units else elevation * KILOMETERS_TO_MILE_FACTOR / 1000
+    # elevation is in meters => convert to km
+    km_elevation = elevation / 1000
+    return km_elevation if metric_units else km_elevation * KILOMETERS_TO_MILE_FACTOR
 
 def update_tle_data():
     celestrak_resp = get(CELESTRAK_TLE_URL)
