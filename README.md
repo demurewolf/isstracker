@@ -2,7 +2,11 @@
 
 ## About
 
-This project would be a webpage that displays a world map and shows the location of the International Space Station (ISS) on that map. The location would update periodically to stay in sync with the ISS.
+This project is a webpage that displays a world map and shows the current location of the International Space Station (ISS) on that map.
+
+Satellite data used to calculate the ISS' postion is from CelesTrak's public data [repository](https://celestrak.org/) ([here](https://celestrak.org/NORAD/elements/) for current stations).
+
+Data for current astronauts in space is found using OpenNotify's [API](http://open-notify.org/).
 
 ## Requirements
 
